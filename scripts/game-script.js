@@ -1,6 +1,6 @@
 var wincondition = false;
 var field = [['', '', ''], ['', '', ''], ['', '', '']];
-
+var winner = '';
 
 function start(el){
     document.querySelector('.game__blocks').classList.remove('off');
@@ -10,6 +10,10 @@ function start(el){
 
 function reset(){
     wincondition = false;
+    winner = '';
+    document.getElementById('anim').classList.remove('active');
+    let al = document.querySelector('.win');
+    al.classList.remove('active');
     let els = document.getElementsByClassName('game__blocks-item');
     for(let i = 0; i < els.length; i++){
         if(els[i].classList.contains('x')){
@@ -58,7 +62,6 @@ function fill(el){
     el.disabled = true;
     el.classList.add('used');
     checkWin();
-
     
 }
 
@@ -77,6 +80,7 @@ function checkWin(){
        (field[0][2] == 'x' && field[1][2] == 'x' && field[2][2] == 'x' ) 
     ){
         wincondition = true;
+        winner = 'X';
     }
     
 
@@ -93,6 +97,7 @@ function checkWin(){
        (field[0][2] == 'o' && field[1][2] == 'o' && field[2][2] == 'o' )
     ){
         wincondition = true;
+        winner = 'O';
     }
 
     let els = document.getElementsByClassName('game__blocks-item')
@@ -101,6 +106,16 @@ function checkWin(){
             els[i].disabled = true;
             els[i].classList.add('used')
         }
+        let al = document.querySelector('.winner');
+        al.innerHTML = `${winner}`;
+
+        if(winner == 'O')
+            al.style.color = '#a8d0e6';
+        else
+            al.style.color = '#f76c6c';
+        document.querySelector('.win').classList.add('active');
+        document.getElementById('anim').classList.add('active');
     }
 
 }
+
